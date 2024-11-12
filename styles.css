@@ -1,0 +1,48 @@
+/* styles.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #000;
+  }
+  
+  .video-container {
+    position: relative;
+    width: 80%;
+    max-width: 800px;
+  }
+  
+  video {
+    width: 100%;
+    height: auto;
+  }
+  
+  .progress-bar-container {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  .progress-bar {
+    width: 0;
+    height: 100%;
+    background-color: #FF50E5;
+  }
+  
+  /* styles.css */
+  .play-pause-btn i {
+    font-size: 20px;
+    color: #333;
+  }
+  
+  
