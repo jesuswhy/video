@@ -1,8 +1,10 @@
 const video = document.getElementById('myVideo');
 const progressBar = document.getElementById('progressBar');
 const playPauseBtn = document.getElementById('playPauseBtn');
+const fullscreenBtn = document.getElementById('fullscreenBtn');
+const videoContainer = document.getElementById('videoContainer');
 
-const animationDuration = 57000; // 60 секунд для прогресс-бара
+const animationDuration = 60000; // 60 секунд для прогресс-бара
 let hideTimeout;
 let rafId;
 let pausedProgress = 0; // Сохраненный прогресс (в миллисекундах) до паузы
@@ -63,9 +65,41 @@ function togglePlayPause() {
   resetHideTimeout(); // Перезапуск таймера скрытия кнопки
 }
 
+// Функция для переключения полноэкранного режима
+function toggleFullscreen() {
+  if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+    // Пытаемся войти в полноэкранный режим
+    if (videoContainer.requestFullscreen) {
+      videoContainer.requestFullscreen();
+    } else if (videoContainer.webkitRequestFullscreen) { // Для Safari
+      videoContainer.webkitRequestFullscreen();
+    } else if (videoContainer.mozRequestFullScreen) { // Для Firefox
+      videoContainer.mozRequestFullScreen();
+    } else if (videoContainer.msRequestFullscreen) { // Для IE/Edge
+      videoContainer.msRequestFullscreen();
+    }
+    fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>'; // Меняем иконку на "сжать"
+  } else {
+    // Выход из полноэкранного режима
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) { // Для Safari
+      document.webkitExitFullscreen();
+    } else if (document.mozCancelFullScreen) { // Для Firefox
+      document.mozCancelFullScreen();
+    } else if (document.msExitFullscreen) { // Для IE/Edge
+      document.msExitFullscreen();
+    }
+    fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>'; // Меняем иконку на "развернуть"
+  }
+}
+
 // Навешиваем обработчик на кнопку и на видео для клика
 playPauseBtn.addEventListener('click', togglePlayPause);
 video.addEventListener('click', togglePlayPause); // Обработчик на видео
+
+// Навешиваем обработчик на кнопку полноэкранного режима
+fullscreenBtn.addEventListener('click', toggleFullscreen);
 
 // Сбрасываем таймер при старте воспроизведения
 video.addEventListener('play', resetHideTimeout);
